@@ -131,7 +131,7 @@ node scripts/verify-dock.mjs  # 浏览器半：用 React 桩驱动输入框横�
 node scripts/verify-ui.mjs    # 可选：对一个真实 GUI 跑 Playwright（见脚本头部说明）
 ```
 
-**发布。** 完整发布清单（改版本、CI、npm publish、GitHub Release、干净 profile 验证）见 [RELEASING.md](RELEASING.md)（英文）。
+**发布。** 完整发布清单（改版本、CI、npm publish、GitHub Release、干净 profile 验证）见 [简体中文](RELEASING.zh-CN.md) 与 [English](RELEASING.md)。
 
 源码很少，一口气能读完：
 

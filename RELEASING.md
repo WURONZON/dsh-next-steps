@@ -1,5 +1,7 @@
 # Releasing
 
+**English** · [简体中文](RELEASING.zh-CN.md)
+
 The checklist for every release, distilled from v0.1.0 through v0.1.2. The npm
 package is `@zongcn/dsh-next-steps`; the GitHub repository, tags, and releases
 keep the name `dsh-next-steps`.
