@@ -34,20 +34,26 @@ Next steps 是 DeepSeek Harness（DSH）的一个插件。每轮回答结束，�
 
 需要带 Web 客户端的 DSH（桌面应用，或 `dsh web`），以及 `PATH` 里的 `pnpm`。
 
-**桌面应用。** 先把仓库 clone 下来，再在「设置 → 插件」里安装 bundle，指向 clone 出来的文件夹。安装器接受本地绝对路径、npm 包名、git URL 或 tarball。
+**桌面应用。** 先把仓库 clone 下来，再在「设置 → 插件」里安装 bundle，指向 clone 出来的文件夹。安装器接受本地绝对路径、npm 包名（例如 `@zongcn/dsh-next-steps`）、git URL 或 tarball。
 
-**`dsh web`。** 一条命令：
+**`dsh web`。** 安装 npm 上的发布包：
+
+```sh
+dsh plugin --profile web add @zongcn/dsh-next-steps
+```
+
+也可以从 clone 安装（本地链接）：
 
 ```sh
 git clone https://github.com/WURONZON/dsh-next-steps.git
 dsh plugin --profile web add "$PWD/dsh-next-steps"
 ```
 
-`dsh plugin` 会在 profile 目录里执行 pnpm；因为这个包声明了 `dsh.bundle.patch`，管理器还会把它记进该 profile 的 `dsh.profile.bundles`。依赖是本地链接，所以拉取更新或改完代码，重载即可生效。desktop profile 归应用自己管，不接受独立 CLI，所以才走设置页。
+`dsh plugin` 会在 profile 目录里执行 pnpm；因为这个包声明了 `dsh.bundle.patch`，管理器还会把它记进该 profile 的 `dsh.profile.bundles`。npm 安装会锁定已发布版本；clone 安装是本地链接，所以拉取更新或改完代码，重载即可生效。desktop profile 归应用自己管，不接受独立 CLI，所以才走设置页。
 
 **重载。** 新加的 bundle 由 profile 的 HMR 直接生效；替换已安装的副本则需要重启。建议会在该会话下一轮结束时重新生成。
 
-**卸载。** 在「设置 → 插件」里移除，或执行 `dsh plugin --profile web remove dsh-next-steps`，然后重启。
+**卸载。** 在「设置 → 插件」里移除，或执行 `dsh plugin --profile web remove @zongcn/dsh-next-steps`，然后重启。
 
 <details>
 <summary>手工安装</summary>
@@ -56,8 +62,8 @@ dsh plugin --profile web add "$PWD/dsh-next-steps"
 
 ```json
 {
-  "dsh": { "profile": { "bundles": ["…", "dsh-next-steps"] } },
-  "dependencies": { "dsh-next-steps": "link:/absolute/path/to/dsh-next-steps" }
+  "dsh": { "profile": { "bundles": ["…", "@zongcn/dsh-next-steps"] } },
+  "dependencies": { "@zongcn/dsh-next-steps": "link:/absolute/path/to/dsh-next-steps" }
 }
 ```
 
@@ -72,7 +78,7 @@ dsh plugin --profile web add "$PWD/dsh-next-steps"
 ```yaml
 - insert:
     - id: next-steps
-      name: 'dsh-next-steps'
+      name: '@zongcn/dsh-next-steps'
       config:
         maxSuggestions: 3
         minAnswerChars: 80

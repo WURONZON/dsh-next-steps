@@ -34,20 +34,26 @@ The moment a turn ends: three numbered prompts, right where you type. Press one 
 
 Requires DSH with the web client — the desktop app, or `dsh web` — and `pnpm` on your `PATH`.
 
-**Desktop app.** Clone the repository, then install the bundle from **Settings → Plugins** and point it at the cloned folder. The installer accepts an absolute local path, an npm package, a git URL or a tarball.
+**Desktop app.** Clone the repository, then install the bundle from **Settings → Plugins** and point it at the cloned folder. The installer accepts an absolute local path, an npm package (for example `@zongcn/dsh-next-steps`), a git URL or a tarball.
 
-**`dsh web`.** One command:
+**`dsh web`.** Install the published package:
+
+```sh
+dsh plugin --profile web add @zongcn/dsh-next-steps
+```
+
+Or install from a clone, which links the checkout:
 
 ```sh
 git clone https://github.com/WURONZON/dsh-next-steps.git
 dsh plugin --profile web add "$PWD/dsh-next-steps"
 ```
 
-`dsh plugin` runs pnpm inside the profile directory; because this package declares `dsh.bundle.patch`, the manager also records it in that profile's `dsh.profile.bundles`. The dependency is a local link, so pulling or editing the checkout is enough before the next reload. The desktop profile belongs to the app and refuses the standalone CLI, which is why it takes the settings path.
+`dsh plugin` runs pnpm inside the profile directory; because this package declares `dsh.bundle.patch`, the manager also records it in that profile's `dsh.profile.bundles`. The npm install pins a published version; a clone installs as a local link, so pulling or editing the checkout is enough before the next reload. The desktop profile belongs to the app and refuses the standalone CLI, which is why it takes the settings path.
 
 **Reload.** A newly added bundle is applied by the profile's HMR; replacing an installed copy needs a restart. Suggestions regenerate on a session's next completed turn.
 
-**Uninstall.** Remove the bundle in **Settings → Plugins**, or run `dsh plugin --profile web remove dsh-next-steps`, then restart.
+**Uninstall.** Remove the bundle in **Settings → Plugins**, or run `dsh plugin --profile web remove @zongcn/dsh-next-steps`, then restart.
 
 <details>
 <summary>Installing by hand</summary>
@@ -56,8 +62,8 @@ A profile is a `package.json` under `$DSH_HOME/profiles/<name>`, and a bundle lo
 
 ```json
 {
-  "dsh": { "profile": { "bundles": ["…", "dsh-next-steps"] } },
-  "dependencies": { "dsh-next-steps": "link:/absolute/path/to/dsh-next-steps" }
+  "dsh": { "profile": { "bundles": ["…", "@zongcn/dsh-next-steps"] } },
+  "dependencies": { "@zongcn/dsh-next-steps": "link:/absolute/path/to/dsh-next-steps" }
 }
 ```
 
@@ -72,7 +78,7 @@ Options live in `cordis.patch.yml`, under the bundle row's `config`:
 ```yaml
 - insert:
     - id: next-steps
-      name: 'dsh-next-steps'
+      name: '@zongcn/dsh-next-steps'
       config:
         maxSuggestions: 3
         minAnswerChars: 80

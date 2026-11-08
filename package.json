@@ -1,5 +1,5 @@
 {
-  "name": "dsh-next-steps",
+  "name": "@zongcn/dsh-next-steps",
   "version": "0.1.0",
   "description": "Suggests up to three prompts to send next after each finished turn, right above the composer.",
   "keywords": [

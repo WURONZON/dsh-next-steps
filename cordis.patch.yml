@@ -3,7 +3,7 @@
 # ./client.js as the browser half.
 - insert:
     - id: next-steps
-      name: 'dsh-next-steps'
+      name: '@zongcn/dsh-next-steps'
       config:
         enabled: true
         minAnswerChars: 80
