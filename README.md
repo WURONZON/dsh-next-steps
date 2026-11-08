@@ -77,7 +77,7 @@ Options live in `cordis.patch.yml`, under the bundle row's `config`:
 
 ```yaml
 - insert:
-    - id: next-steps
+    - id: dsh-next-steps
       name: '@zongcn/dsh-next-steps'
       config:
         maxSuggestions: 3

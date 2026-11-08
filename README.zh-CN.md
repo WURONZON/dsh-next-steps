@@ -77,7 +77,7 @@ dsh plugin --profile web add "$PWD/dsh-next-steps"
 
 ```yaml
 - insert:
-    - id: next-steps
+    - id: dsh-next-steps
       name: '@zongcn/dsh-next-steps'
       config:
         maxSuggestions: 3

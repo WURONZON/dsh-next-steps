@@ -14,6 +14,7 @@
  * Exits non-zero when a check fails.
  */
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 
 // ---- Minimal React -------------------------------------------------------
 // Only the four hooks the bundle calls, with the same observable rules:
@@ -70,6 +71,14 @@ globalThis.window = {
 }
 await import(new URL('../client.js', import.meta.url).href)
 assert.ok(captured, 'client.js registered a module definition')
+
+// client-modules keys each bundle factory by its boot row id, which is the
+// package name. When the literal differs the loader believes the batch "loaded
+// without registering", refetches the bundle by its own URL, and the second
+// load() throws "duplicate factory registration" — the browser half then never
+// mounts. Keep the literal pinned to package.json.
+const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
+assert.equal(captured.id, pkg.name, 'client.js registers the loader id matching the package name')
 
 const EN = {}
 const seats = {}

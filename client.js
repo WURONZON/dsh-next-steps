@@ -13,7 +13,8 @@
  */
 
 window.__ModuleLoader__.load({
-  id: 'dsh-next-steps',
+  // The graph row id is the package name (client-modules requires them to match).
+  id: '@zongcn/dsh-next-steps',
   factory(require) {
     const React = require('react')
     const h = React.createElement

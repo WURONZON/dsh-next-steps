@@ -2,7 +2,7 @@
 # plugin); the `dsh.client` declaration in package.json makes the Web app load
 # ./client.js as the browser half.
 - insert:
-    - id: next-steps
+    - id: dsh-next-steps
       name: '@zongcn/dsh-next-steps'
       config:
         enabled: true
