@@ -1,0 +1,11 @@
+# The row loads this package's main entry as the Host half (a plain Cordis
+# plugin); the `dsh.client` declaration in package.json makes the Web app load
+# ./client.js as the browser half.
+- insert:
+    - id: next-steps
+      name: 'dsh-next-steps'
+      config:
+        enabled: true
+        minAnswerChars: 80
+        maxSuggestions: 3
+        suggestSkills: true

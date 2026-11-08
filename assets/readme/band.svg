@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="ns-band-title ns-band-desc">
+  <title id="ns-band-title">Suggestion chips above the composer</title>
+  <desc id="ns-band-desc">The tail of an assistant answer, then a row of three numbered suggestion chips after a next: label with a regenerate button and a dismiss control, then the composer with a send button.</desc>
+
+  <defs>
+    <linearGradient id="ns-band-bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#0D0F16"/>
+      <stop offset="1" stop-color="#08090D"/>
+    </linearGradient>
+    <linearGradient id="ns-band-send" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B5BDB"/>
+      <stop offset="1" stop-color="#7048E8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="420" rx="28" fill="url(#ns-band-bg)"/>
+
+  <g id="chat-tail" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif" font-size="20" fill="#9AA2B6">
+    <text x="64" y="110">All 33 checks pass — the parser now rejects nested quotes the same</text>
+    <text x="64" y="142">way the lexer does. Nothing else changed in this turn.</text>
+  </g>
+
+  <g id="band">
+    <text x="64" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" fill="#6E7689">next:</text>
+
+    <g transform="translate(138 190)">
+      <rect width="274" height="48" rx="13" fill="#141824" stroke="#2A3142"/>
+      <circle cx="26" cy="24" r="12" fill="#171B26" stroke="#2E3446"/>
+      <text x="26" y="30" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#9AA2B6">1</text>
+      <text x="48" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif" font-size="19" fill="#C9CFDD">run the tests you wrote</text>
+    </g>
+
+    <g transform="translate(432 190)">
+      <rect width="274" height="48" rx="13" fill="#141824" stroke="#2A3142"/>
+      <circle cx="26" cy="24" r="12" fill="#171B26" stroke="#2E3446"/>
+      <text x="26" y="30" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#9AA2B6">2</text>
+      <text x="48" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif" font-size="19" fill="#C9CFDD">do the same for settings</text>
+    </g>
+
+    <g transform="translate(726 190)">
+      <rect width="272" height="48" rx="13" fill="#141824" stroke="#2A3142"/>
+      <circle cx="26" cy="24" r="12" fill="#171B26" stroke="#2E3446"/>
+      <text x="26" y="30" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#9AA2B6">3</text>
+      <text x="48" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif" font-size="19" fill="#C9CFDD">commit and open the PR</text>
+    </g>
+
+    <g transform="translate(1004 190)">
+      <rect width="40" height="48" rx="13" fill="#141824" stroke="#2A3142"/>
+      <text x="20" y="31" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif" font-size="21" fill="#9AA2B6">↻</text>
+    </g>
+
+    <text x="1058" y="220" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif" font-size="18" fill="#5E6678">dismiss</text>
+  </g>
+
+  <g id="composer" transform="translate(64 270)">
+    <rect width="1072" height="96" rx="18" fill="#12141C" stroke="#272C3A"/>
+    <text x="30" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif" font-size="20" fill="#5E6678">Ask anything…</text>
+    <circle cx="1016" cy="48" r="20" fill="url(#ns-band-send)"/>
+    <path d="M1016 40v16M1009 47l7-7 7 7" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+  </g>
+</svg>

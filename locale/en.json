@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Next steps",
+    "description": "Suggests up to three prompts to send next after each finished turn, right above the composer. One click writes a suggestion into the prompt box as a draft; regenerate the list in place when none fit."
+  }
+}

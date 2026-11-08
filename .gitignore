@@ -1,0 +1,15 @@
+node_modules/
+output/
+.DS_Store
+*.log
+
+# Packed artifacts and local npm credentials
+*.tgz
+.npmrc
+.env*
+
+# Scratch work kept out of the repository
+tmp/
+scratch/
+*.tmp
+scripts/tmp-*
