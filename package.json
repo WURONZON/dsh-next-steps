@@ -1,6 +1,6 @@
 {
   "name": "@zongcn/dsh-next-steps",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Suggests up to three prompts to send next after each finished turn, right above the composer.",
   "keywords": [
     "deepseek-harness",
