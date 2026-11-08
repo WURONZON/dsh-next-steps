@@ -125,9 +125,21 @@ try {
         check('regenerate control is enabled', await regenerate.isEnabled())
       }
       await shot(page, '02-band-light')
-      // A press writes the draft and must not submit it.
-      const firstPrompt = await chips.first().getAttribute('title')
-      await chips.first().click()
+      // Hovering a chip previews the full prompt in the plugin's own tooltip; a
+      // press then writes that prompt as a draft and must not submit it.
+      const firstChip = chips.first()
+      await firstChip.hover()
+      let firstPrompt = null
+      try {
+        const tooltip = band.locator('.nsx-tip')
+        await tooltip.waitFor({ state: 'visible', timeout: 5000 })
+        firstPrompt = (await tooltip.innerText()).trim()
+        check('hovering a chip previews its full prompt', firstPrompt.length > 0, firstPrompt.slice(0, 60))
+        await shot(page, '02b-chip-tooltip')
+      } catch {
+        check('hovering a chip previews its full prompt', false, 'no .nsx-tip appeared on hover')
+      }
+      await firstChip.click()
       await page.waitForTimeout(400)
       const editor = page.locator('[contenteditable="true"]').first()
       let draft = ''

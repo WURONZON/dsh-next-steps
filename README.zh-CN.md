@@ -18,7 +18,7 @@ Next steps 是 DeepSeek Harness（DSH）的一个插件。每轮回答结束，�
 
 **主要功能。**
 
-- **输入框上方的建议 chips。** 三条带编号的提示，点一下就写进输入框变成草稿——改完自己按回车；想换一批可以原地重新生成，不需要时点 dismiss 收起。
+- **输入框上方的建议 chips。** 三条带编号的提示；悬停或键盘聚焦会显示完整提示，点一下就写进输入框变成草稿——改完自己按回车；想换一批可以原地重新生成，不需要时点 dismiss 收起。
 - **懂这段对话的建议。** 模型看到最近十条人和模型的消息，以及（默认开启的）本会话技能清单，所以建议可以是一个真正的 `/skill` 提示，而不是泛泛而谈；建议会沿用你刚才使用的语言。
 - **不用再配一个 provider。** 建议跑在会话本来就在用的模型路由上，不需要第二把 API key，也不会多出一份账单。
 
@@ -125,7 +125,7 @@ dsh plugin --profile web add "$PWD/dsh-next-steps"
 ## 开发
 
 ```sh
-npm test                      # 33 项宿主检查 + 10 项横条检查，零依赖、无浏览器
+npm test                      # 33 项宿主检查 + 13 项横条检查，零依赖、无浏览器
 node scripts/selftest.mjs     # 仅宿主半
 node scripts/verify-dock.mjs  # 浏览器半：用 React 桩驱动输入框横条
 node scripts/verify-ui.mjs    # 可选：对一个真实 GUI 跑 Playwright（见脚本头部说明）

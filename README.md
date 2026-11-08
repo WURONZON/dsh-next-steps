@@ -18,7 +18,7 @@ It costs one short model call per qualifying turn. It never sends anything on yo
 
 **Main features.**
 
-- **Chips above the composer.** Three numbered prompts, one click away. Clicking one writes it into the composer as a draft — edit it, then press Enter yourself. Regenerate the row in place for a fresh set, or dismiss it when it is not what you wanted.
+- **Chips above the composer.** Three numbered prompts, one click away. Hover or keyboard-focus a chip to read its full prompt in a tooltip; clicking one writes it into the composer as a draft — edit it, then press Enter yourself. Regenerate the row in place for a fresh set, or dismiss it when it is not what you wanted.
 - **Suggestions that know the session.** The model sees the last ten human and model messages, and — when enabled — the session's skill catalog, so a suggestion can be a real `/skill` prompt rather than generic advice. Prompts come back in the language you were already using.
 - **No provider to set up.** Suggestions run on whatever model route the session already uses, so there is no second API key and no extra bill to reconcile.
 
@@ -125,7 +125,7 @@ The plugin serves only the two local state routes it needs, and it never submits
 ## Development
 
 ```sh
-npm test                      # 33 host checks + 10 dock checks, no dependencies, no browser
+npm test                      # 33 host checks + 13 dock checks, no dependencies, no browser
 node scripts/selftest.mjs     # host half only
 node scripts/verify-dock.mjs  # browser half: the composer band, driven by a React stub
 node scripts/verify-ui.mjs    # optional Playwright run against a live GUI (see the script header)

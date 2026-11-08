@@ -212,6 +212,8 @@ async function mount(sessions, draft) {
 
 /** The Host poll runs every 2 s; one round of it settles a scripted change. */
 const nextPoll = () => new Promise((resolve) => setTimeout(resolve, 2200))
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+const tooltipNode = () => visible().find((node) => node.props !== undefined && node.props.role === 'tooltip')
 
 // ---- Checks --------------------------------------------------------------
 let passed = 0
@@ -351,6 +353,47 @@ await check('typing during an in-flight regenerate keeps the spinner', async () 
   release()
   await flush()
   assert.ok(texts().includes('Regenerating…'), 'success alone does not unlock before the poll')
+})
+
+await check('hovering a suggestion chip shows its full prompt in a tooltip', async () => {
+  await mount(ready(1200), '')
+  assert.equal(tooltipNode(), undefined, 'no tooltip before hovering')
+  const wrap = visible().find((node) => String(node.props.className).includes('nsx-chip-wrap'))
+  assert.ok(wrap, 'each chip is wrapped so its tooltip can be placed above it')
+  wrap.props.onPointerEnter()
+  await flush()
+  await wait(400)
+  await flush()
+  const tip = tooltipNode()
+  assert.ok(tip, 'a tooltip appears on hover: ' + texts())
+  assert.equal(textOf(tip), 'run the tests', 'the tooltip carries the full prompt')
+  wrap.props.onPointerLeave()
+  await flush()
+  assert.equal(tooltipNode(), undefined, 'the tooltip hides when the pointer leaves')
+})
+
+await check('focusing a suggestion chip shows its tooltip without waiting', async () => {
+  await mount(ready(1300), '')
+  const chip = suggestionChips()[0]
+  assert.ok(chip, 'a suggestion chip is rendered')
+  chip.props.onFocus()
+  await flush()
+  const tip = tooltipNode()
+  assert.ok(tip, 'a tooltip appears on keyboard focus')
+  assert.equal(textOf(tip), 'run the tests', 'the tooltip carries the full prompt')
+})
+
+await check('a tooltip does not survive the next round', async () => {
+  await mount(ready(1400), '')
+  visible().find((node) => String(node.props.className).includes('nsx-chip-wrap')).props.onPointerEnter()
+  await flush()
+  await wait(400)
+  await flush()
+  assert.ok(tooltipNode(), 'tooltip visible before the next round')
+  payload = baseValue(ready(1500, [{ label: 'Fresh', prompt: 'fresh prompt' }]))
+  await nextPoll()
+  await flush()
+  assert.equal(tooltipNode(), undefined, 'the old tooltip is gone after the round changes')
 })
 
 dispose()

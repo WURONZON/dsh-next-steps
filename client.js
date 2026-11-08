@@ -112,6 +112,10 @@ window.__ModuleLoader__.load({
       '.nsx-band-label{font-size:11px;color:var(--dsw-alias-label-secondary);padding:0 2px;flex:none}',
       '.nsx-band-error{flex:1 1 100%;min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.5;color:var(--dsw-alias-state-error-primary)}',
       '.nsx-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}',
+      '.nsx-chip-wrap{position:relative;display:inline-flex;max-width:100%}',
+      '.nsx-tip{position:absolute;left:0;bottom:calc(100% + 8px);z-index:30;box-sizing:border-box;width:max-content;max-width:min(420px, calc(100vw - 48px));padding:8px 10px;border-radius:var(--dsw-radius-lg);background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary);box-shadow:var(--dsw-elevation-panel);font-size:11.5px;line-height:1.5;white-space:normal;overflow-wrap:anywhere;pointer-events:none;animation:nsx-tip-in .12s ease-out}',
+      '@keyframes nsx-tip-in{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}',
+      '@media (prefers-reduced-motion:reduce){.nsx-tip{animation:none}}',
       '.nsx-chip{font:inherit;display:inline-flex;align-items:center;gap:7px;max-width:100%;height:28px;padding:0 10px 0 6px;border-radius:7px;border:1px solid var(--dsw-alias-border-l1);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-primary);cursor:pointer;box-sizing:border-box}',
       '.nsx-chip:hover:enabled{border-color:var(--dsw-alias-brand-primary)}',
       '.nsx-chip:disabled{opacity:.55;cursor:default}',
@@ -391,6 +395,41 @@ window.__ModuleLoader__.load({
         const [pendingFill, setPendingFill] = React.useState(null)
         const [regenerating, setRegenerating] = React.useState(false)
         const [refreshError, setRefreshError] = React.useState('')
+        // A chip shows a short label, so hover and focus preview the full prompt
+        // in a tooltip the plugin renders itself. The window does not surface a
+        // native `title` hint, so the affordance has to exist in the DOM.
+        const [tip, setTip] = React.useState(null)
+        const tipTimer = React.useRef(null)
+        const hideTip = () => {
+          if (tipTimer.current !== null) {
+            clearTimeout(tipTimer.current)
+            tipTimer.current = null
+          }
+          setTip(null)
+        }
+        const showTip = (index, delay) => {
+          if (tipTimer.current !== null) {
+            clearTimeout(tipTimer.current)
+            tipTimer.current = null
+          }
+          if (delay <= 0) {
+            setTip(index)
+            return
+          }
+          tipTimer.current = setTimeout(() => {
+            tipTimer.current = null
+            setTip(index)
+          }, delay)
+        }
+        React.useEffect(
+          () => () => {
+            if (tipTimer.current !== null) clearTimeout(tipTimer.current)
+          },
+          [],
+        )
+        React.useEffect(() => {
+          hideTip()
+        }, [at, status])
         // A fresh round or any edit to the draft invalidates a pending replace;
         // the regenerate spinner and its error keep their own reset trigger.
         React.useEffect(() => {
@@ -525,11 +564,32 @@ window.__ModuleLoader__.load({
             items.map((item, index) => {
               const prompt = item !== null && typeof item === 'object' && typeof item.prompt === 'string' ? item.prompt : ''
               const label = item !== null && typeof item === 'object' && typeof item.label === 'string' && item.label !== '' ? item.label : prompt
+              const tipId = `nsx-tip-${at}-${index}`
               return h(
-                'button',
-                { key: index, type: 'button', className: 'nsx-chip', title: prompt, onClick: () => fill(prompt) },
-                h('span', { className: 'nsx-chip-n' }, String(index + 1)),
-                h('span', { className: 'nsx-chip-text' }, label),
+                'span',
+                {
+                  key: index,
+                  className: 'nsx-chip-wrap',
+                  onPointerEnter: () => showTip(index, 260),
+                  onPointerLeave: hideTip,
+                },
+                h(
+                  'button',
+                  {
+                    type: 'button',
+                    className: 'nsx-chip',
+                    'aria-describedby': tip === index ? tipId : undefined,
+                    onClick: () => {
+                      hideTip()
+                      fill(prompt)
+                    },
+                    onFocus: () => showTip(index, 0),
+                    onBlur: hideTip,
+                  },
+                  h('span', { className: 'nsx-chip-n' }, String(index + 1)),
+                  h('span', { className: 'nsx-chip-text' }, label),
+                ),
+                tip === index ? h('span', { id: tipId, role: 'tooltip', className: 'nsx-tip' }, prompt) : null,
               )
             }),
           ),
