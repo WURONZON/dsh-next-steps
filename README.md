@@ -131,6 +131,8 @@ node scripts/verify-dock.mjs  # browser half: the composer band, driven by a Rea
 node scripts/verify-ui.mjs    # optional Playwright run against a live GUI (see the script header)
 ```
 
+**Releasing.** The full release checklist — version bump, CI, npm publish, GitHub Release, and clean-profile verification — lives in [RELEASING.md](RELEASING.md).
+
 The source is small enough to read in one sitting:
 
 ```text
