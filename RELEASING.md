@@ -88,6 +88,26 @@ keep the name `dsh-next-steps`.
    - `POST /api/next-steps/state` → `200 {"ok":true, ...}`;
    - an unknown route → 404.
 
+   The token is only accepted on the first request: `GET /?token=…` answers
+   `303` and sets a session cookie, so a script has to carry it with
+   `-c/-b <jar> -L`. `Authorization: Bearer <token>` is rejected with `401`,
+   and before that cookie exists every path — including a bogus one — answers
+   `401`, so the 404 check only proves something once the session is
+   established:
+
+   ```sh
+   TOKEN=<printed token>; J=/tmp/jar
+   curl -s -c "$J" -b "$J" -L -o /tmp/index.html -w 'GET / %{http_code}\n' \
+     "http://127.0.0.1:6130/?token=$TOKEN"
+   curl -s -c "$J" -b "$J" -X POST "http://127.0.0.1:6130/api/next-steps/state?token=$TOKEN" \
+     -H 'content-type: application/json' -d '{"all":true}'
+   curl -s -c "$J" -b "$J" -o /dev/null -w 'unknown route %{http_code}\n' \
+     "http://127.0.0.1:6130/api/next-steps/definitely-not-a-route?token=$TOKEN"
+   ```
+
+   Check the boot payload with
+   `grep -c '@zongcn/dsh-next-steps' /tmp/index.html` — it must be above zero.
+
 9. **Clean up**:
 
    ```sh

@@ -87,6 +87,24 @@
    - `POST /api/next-steps/state` → `200 {"ok":true, ...}`；
    - 未知路由 → 404。
 
+   token 只在第一个请求上被接受：`GET /?token=…` 返回 `303` 并种下会话
+   cookie，所以脚本要用 `-c/-b <jar> -L` 带上它。`Authorization: Bearer
+   <token>` 会被拒为 `401`；在 cookie 建立之前，任何路径（包括不存在的）都先
+   返回 `401`，因此 404 断言必须在会话建立之后再测，否则它什么也证明不了：
+
+   ```sh
+   TOKEN=<服务端打印的 token>; J=/tmp/jar
+   curl -s -c "$J" -b "$J" -L -o /tmp/index.html -w 'GET / %{http_code}\n' \
+     "http://127.0.0.1:6130/?token=$TOKEN"
+   curl -s -c "$J" -b "$J" -X POST "http://127.0.0.1:6130/api/next-steps/state?token=$TOKEN" \
+     -H 'content-type: application/json' -d '{"all":true}'
+   curl -s -c "$J" -b "$J" -o /dev/null -w '未知路由 %{http_code}\n' \
+     "http://127.0.0.1:6130/api/next-steps/definitely-not-a-route?token=$TOKEN"
+   ```
+
+   boot payload 检查：`grep -c '@zongcn/dsh-next-steps' /tmp/index.html`
+   应大于 0。
+
 9. **清理**：
 
    ```sh
