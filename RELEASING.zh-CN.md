@@ -102,8 +102,9 @@
      "http://127.0.0.1:6130/api/next-steps/definitely-not-a-route?token=$TOKEN"
    ```
 
-   boot payload 检查：`grep -c '@zongcn/dsh-next-steps' /tmp/index.html`
-   应大于 0。
+   boot payload 里的模块引用次数：
+   `grep -o '@zongcn/dsh-next-steps' /tmp/index.html | wc -l`，结果应大于 0。
+   `index.html` 是单行压缩的，用 `grep -c` 只会得到 `1`，看不出真实出现次数。
 
 9. **清理**：
 

@@ -105,8 +105,10 @@ keep the name `dsh-next-steps`.
      "http://127.0.0.1:6130/api/next-steps/definitely-not-a-route?token=$TOKEN"
    ```
 
-   Check the boot payload with
-   `grep -c '@zongcn/dsh-next-steps' /tmp/index.html` — it must be above zero.
+   Count how often the boot payload references the module:
+   `grep -o '@zongcn/dsh-next-steps' /tmp/index.html | wc -l`. The result must
+   be above zero; `index.html` is minified onto a single line, so `grep -c`
+   would answer `1` no matter how many times the module is referenced.
 
 9. **Clean up**:
 
