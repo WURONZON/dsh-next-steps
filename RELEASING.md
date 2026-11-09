@@ -106,9 +106,9 @@ keep the name `dsh-next-steps`.
    ```
 
    Count how often the boot payload references the module:
-   `grep -o '@zongcn/dsh-next-steps' /tmp/index.html | wc -l`. The result must
-   be above zero; `index.html` is minified onto a single line, so `grep -c`
-   would answer `1` no matter how many times the module is referenced.
+   `grep -o '@zongcn/dsh-next-steps' /tmp/index.html | wc -l`. Expected: `5`.
+   `index.html` is minified onto a single line, so `grep -c` would answer `1`
+   no matter how many times the module is referenced.
 
 9. **Clean up**:
 
