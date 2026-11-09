@@ -2,7 +2,7 @@
 
 [English](RELEASING.md) · **简体中文**
 
-每次发布使用的清单，来自 v0.1.0 到 v0.1.2 的实践。npm 包名是
+每次发布使用的清单，来自 v0.1.0 到 v0.1.3 的实践。npm 包名是
 `@zongcn/dsh-next-steps`；GitHub 仓库、tag 与 Release 保持
 `dsh-next-steps`。
 
@@ -20,13 +20,13 @@
 1. **改版本号** —— 发布提交里唯一的变化：
 
    ```sh
-   npm version 0.1.3 --no-git-tag-version
+   npm version <next-version> --no-git-tag-version
    ```
 
 2. **本地验证**：
 
    ```sh
-   npm test              # 33 项宿主检查 + 10 项横条检查
+   npm test              # 33 项宿主检查 + 13 项横条检查
    npm pack --dry-run    # 16 个文件
    ```
 

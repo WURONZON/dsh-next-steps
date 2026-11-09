@@ -2,7 +2,7 @@
 
 **English** · [简体中文](RELEASING.zh-CN.md)
 
-The checklist for every release, distilled from v0.1.0 through v0.1.2. The npm
+The checklist for every release, distilled from v0.1.0 through v0.1.3. The npm
 package is `@zongcn/dsh-next-steps`; the GitHub repository, tags, and releases
 keep the name `dsh-next-steps`.
 
@@ -20,13 +20,13 @@ keep the name `dsh-next-steps`.
 1. **Bump the version** — the only change in the release commit:
 
    ```sh
-   npm version 0.1.3 --no-git-tag-version
+   npm version <next-version> --no-git-tag-version
    ```
 
 2. **Verify locally**:
 
    ```sh
-   npm test              # 33 host checks + 10 dock checks
+   npm test              # 33 host checks + 13 dock checks
    npm pack --dry-run    # 16 files
    ```
 
