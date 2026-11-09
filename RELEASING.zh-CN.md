@@ -10,7 +10,7 @@
 
 | 要求 | 原因 |
 | --- | --- |
-| npm token 具备 **Read and write (publish and stage)** 并勾选 **Bypass 2FA** | stage only 的 token 会强制走 staged 发布；没有 bypass 会报 `EOTP` |
+| npm token 具备 **Read and write (publish and stage)** 并勾选 **Bypass 2FA** | stage only 的 token 会强制走 staged 发布；没有 bypass 时 CLI 会停在 `EOTP`——可以完成 npm 弹出的浏览器 web auth（npm 10 起），或改用 `--otp=<code>` |
 | `~/.npm` 缓存可写 | `npm pack` / `npm publish` 遇到 root 属主的缓存文件会报 `EPERM`（`sudo chown -R 501:20 ~/.npm`） |
 | 被 tag 的提交里包含 `.github/workflows/ci.yml` | 只有该提交存在 workflow 时，push tag 才会触发 CI |
 | 工作区干净 | 发布提交里只应有版本号变更 |

@@ -55,6 +55,8 @@ dsh plugin --profile web add "$PWD/dsh-next-steps"
 
 **卸载。** 在「设置 → 插件」里移除，或执行 `dsh plugin --profile web remove @zongcn/dsh-next-steps`，然后重启。
 
+**包改名或换了链接目录之后要重装。** 在「设置 → 插件」里把开关关掉再打开，只会改 `dsh.profile.bundles` 里的条目，不会重跑 pnpm，依赖会保留安装时的键名。包改名、或把桌面端指到别的 checkout 之后，要「移除」再重新安装——安装器会按目标 `package.json` 的名字写依赖键，而 `link:` 依赖保留安装当时的名字。键名过期会让下次启动报 `<package>: import failed (see console for the import error)`，浏览器半随后报 `client-modules: duplicate factory registration`。
+
 <details>
 <summary>手工安装</summary>
 

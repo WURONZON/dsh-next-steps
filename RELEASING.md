@@ -10,7 +10,7 @@ keep the name `dsh-next-steps`.
 
 | Requirement | Why |
 | --- | --- |
-| npm token with **Read and write (publish and stage)** and **Bypass 2FA** | A stage-only token forces staged publishing; a token without bypass fails with `EOTP` |
+| npm token with **Read and write (publish and stage)** and **Bypass 2FA** | A stage-only token forces staged publishing; without bypass the CLI stops at `EOTP` — either finish the browser web-auth prompt npm opens (npm 10 and later) or pass `--otp=<code>` |
 | Writable `~/.npm` cache | `npm pack` / `npm publish` report `EPERM` on root-owned cache files (`sudo chown -R 501:20 ~/.npm`) |
 | `.github/workflows/ci.yml` present in the tagged commit | Tag pushes only run CI when the workflow exists at that commit |
 | Clean working tree | The version bump is the only change in the release commit |

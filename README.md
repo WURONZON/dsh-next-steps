@@ -55,6 +55,8 @@ dsh plugin --profile web add "$PWD/dsh-next-steps"
 
 **Uninstall.** Remove the bundle in **Settings → Plugins**, or run `dsh plugin --profile web remove @zongcn/dsh-next-steps`, then restart.
 
+**Re-installing a renamed or re-linked package.** Toggling the plugin off and on in **Settings → Plugins** only flips its entry in `dsh.profile.bundles`; it does not re-run pnpm, so the dependency keeps the key it was installed under. After renaming the package, or after pointing the desktop app at a different checkout, remove the plugin and install it again — the installer keys the dependency to the target's `package.json` name, and a `link:` dependency keeps the name it had at install time. A stale key fails the next boot with `<package>: import failed (see console for the import error)`, and the browser half then reports `client-modules: duplicate factory registration`.
+
 <details>
 <summary>Installing by hand</summary>
 
